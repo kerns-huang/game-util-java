@@ -17,12 +17,23 @@ import java.io.InputStream;
  */
 public class PcapUtil {
     public static void main(String[] args) throws IOException {
-        InputStream inputStream=PcapUtil.class.getResourceAsStream("/data_20170720.cap");
-        BufferedInputStream bufferedInputStream=new BufferedInputStream(inputStream);
-        int flag=0;
-        while((flag=bufferedInputStream.read())!=-1)
+        InputStream is=PcapUtil.class.getResourceAsStream("/data_20170720.cap");
+        byte[] buffer_4=new byte[4];
+        byte[] buffer_2=new byte[2];
+        int m=is.read(buffer_4);
+        if(m!=4)//魔术字
         {
-          System.out.println(bufferedInputStream.read());
+            return ;
+        }
+        m=is.read( buffer_2);//主要版本
+        m=is.read(buffer_2);//次要版本
+        m=is.read(buffer_4);//时间区域
+        m=is.read(buffer_4);//sigflags
+        m=is.read(buffer_4);//snaplen
+        m=is.read(buffer_4);//linkType
+        if(m >0)
+        {
+
         }
     }
 }
